@@ -1,0 +1,38 @@
+body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+		}
+		#bg{
+           
+			background-repeat: no-repeat;  
+			background-size: cover;
+			background-size: 1800px 900px;
+		}
+		.user_card {
+			width: 525px;
+			margin-top: auto;
+			margin-bottom: auto;
+			background: #00000014;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 10px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+
+		.form_container {
+			margin-top: 35px;
+		}
+
+		#form-title{
+			color:#106186;
+            font-weight: bold;
+		}
+

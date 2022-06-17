@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+
+{% include 'navbar.html' %}
+<title>Login</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous"> 
+<link rel="stylesheet" href="{% static 'css/sign.css' %}"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap" rel="stylesheet">
+
+{% endblock head %}
+	
+
+{% block body %}
+<body background="{% static 'images/ist.jpg' %}" style="background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
+
+{% if messages %}
+  {% for message in messages  %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}} 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+   {% endfor %}
+{% endif %}
+
+
+
+
+<div class="container h-100">
+	<div class="d-flex justify-content-center h-100">
+		<div class="user_card">
+			<div class="d-flex justify-content-center" >
+					<h3 id="form-title" style="font-size: 2.75rem;">SIGNUP</h3>
+			</div>
+			   <div class="d-flex justify-content-center form_container">
+                    <form method="POST" action="" novalidate style=" height: 70vh; width: 50vh;">
+						  
+						
+                        <div id="div_id_username" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size: 125%; margin: 0px 0px 20px 0px;"> 
+				            <label for="id_username" class=" requiredField" >Username</label> 
+				            <div class=""> 
+				             <input type="text" name="username" placeholder="" maxlength="150" autofocus="" class="textinput textInput form-control" required="" id="id_username"> 
+				            </div> 
+			            </div>
+
+                        <div id="div_id_email" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size: 125%; margin: 0px 0px 20px 0px;"> 
+				           <label for="id_email" class=" requiredField">Email</label> 
+				            <div class=""> 
+						    <input type="email" name="email" class="input emailinput form-control"  maxlength="254" required="" id="id_email"> 
+						    </div> 
+				         </div>
+
+                        <div id="div_id_password1" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size:125%; margin: 0px 0px 20px 0px;"> 
+					        <label for="id_password1" class=" requiredField" style= "color: #000;">Password </label>
+					        <div class=""> 
+						      <input type="password" name="password1" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password1">  
+						    </div> 
+				        </div>
+
+                        <div id="div_id_password2" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size: 125%; margin: 0px 0px 20px 0px;"> 
+				          <label for="id_password2" class=" requiredField" style= "color:#000;">Password confirmation </label> 
+					        <div class=""> 
+						      <input type="password" name="password2" autocomplete="new-password" class="textinput textInput form-control" required="" id="id_password2">  
+					        </div> 
+				        </div> 
+						
+					 
+				
+                        {% csrf_token %}
+                        <input type="submit" value="Submit" class="btn btn-lg" style=" color: #fff9f9; background-color: #106186;border-color: #106186; ">
+					      
+						
+						  
+						
+			        </form>
+                </div>	
+				<p>{{form.errors}}</p> 
+	    </div>			
+	</div>
+</div>
+
+			     
+
+{% endblock body %}

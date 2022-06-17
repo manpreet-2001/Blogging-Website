@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %} HEAD {% endcomment %}
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow&family=Caveat:wght@400;700&family=Gloria+Hallelujah&family=Handlee&family=Patrick+Hand&display=swap" rel="stylesheet">
+{% endblock head %}
+
+{% comment %} BODY {% endcomment %}
+{% block body %}
+<body background="{% static 'images/ist.jpg' %}" style="background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
+
+{% include 'navbar.html' %}
+
+{% if messages %}
+{% for message in messages  %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+   <strong>Congratulations ! {{name}} , </strong> {{message}} 
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+{% endif %}
+    <br>
+
+{% comment %} <a href='{% url 'userpro' %}'>Profile</a> {% endcomment %}
+
+  <h2 class='text-center' style="font-size: 3.75rem; font-family: 'Archivo Narrow', sans-serif;
+  font-family: 'Caveat', cursive;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Handlee', cursive;
+  font-family: 'Patrick Hand', cursive;  
+  color: royalblue; font-weight: bold;
+  
+  }"> Dashboard</h2>
+  
+
+<br>
+<br>
+<div class="container">
+<a href="{% url 'add' %}"class='btn btn-lg btn-primary'  >Add New Post</a>
+<br><br>
+<table class="table table-secondary" style="border-color: gray;"> 
+  <thead>
+    <tr class='text-center' >
+      <th scope="col" style='width:2%'>Id</th>
+      <th scope="col" style='width:25%' >Title</th>
+      <th scope="col" style='width:35%'>Description</th>
+      <th scope="col" style='width:10%' >Photo</th>
+      <th scope="col" style='width:10%' >Author</th>
+      <th scope="col" style='width:15%'>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+   
+    {% for x in posts%}                
+    <tr>
+      <th scope="row">{{x.id}}</th>
+      <td>{{x.title}}</td>
+      <td>{{x.desc}}</td>
+      <td><img src="{{x.photo.url}}" alt="" height='100px' width='100px'></td>
+      <td>{{x.author}}</td>
+
+      <td class='text-center'>
+          {% if user.id == x.author.id %}
+        <a href="{% url 'edit' x.id %} "class='btn btn-lg btn-success' style='margin: 13px 4px 13px 3px;'>Edit</a>
+       
+        <form action="{% url 'delete' x.id %}" method="post" class='d-inline'>
+         {% csrf_token %}
+         <input type="submit"class='btn btn-lg btn-danger' value="Delete">
+       </form>
+       {% endif %}
+      </td>
+      
+ 
+{% comment %} <a href='/'class='btn btn-sm btn-success'>back to home</a> {% endcomment %}
+    {% endfor %}            
+   </div>
+
+
+{% endblock body %}

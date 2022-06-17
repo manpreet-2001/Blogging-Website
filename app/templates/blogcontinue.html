@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load extras %}
+
+{% block head %}
+
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v12.0" nonce="WeWeMNAr"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow&family=Caveat:wght@400;700&family=Gloria+Hallelujah&family=Handlee&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+{% endblock head %}
+
+
+{% block body %}
+
+<body background="{% static 'images/ist.jpg' %}" style="background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
+</body>
+
+{% include "navbar.html" %}
+{% comment %} <a href={% url 'userpro' post.author.profile.id %}>Profile</a> {% endcomment %}
+
+<div class="container">
+  <div class="row g-5">
+    <div class="col-md-8" style="background: #fffaf0bf">
+      <br>
+      <div class="row featurette">
+        <div class="col-md-7">
+          <strong class="d-inline-block mb-2 text-primary"><p class="blog-post-meta"><a href="{% url 'category' post.category %}">{{post.category}}</a></p></strong>
+          <h2 class="featurette-heading">{{post.title}} </h2>
+          <p class="blog-post-meta">{{post.post_date}} by <a href="#">{{post.author}}</a></p>
+          <p class="lead">{{post.desc}}</p>
+          <h3 class="featurette-heading">{{post.head0}} </h3>
+          <p class="lead">{{post.shead0|safe}}</p>
+
+{% comment %} try {% endcomment %}
+          {% comment %} <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+              
+                <img src="{{post.author.image.url}}" class="img-fluid rounded-start" alt="...">
+             
+
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{post.author.username}}</h5>
+                  <p class="card-text">{{post.author.pro}}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div>  {% endcomment %}
+
+          <br>
+          {% comment %} COMMENT {% endcomment %}
+          
+          <div class="container md-3">
+            <h2> Comments ({{comments.count}})</h2>
+            {% if user.is_authenticated %}
+            <form action="/readblog/postComment" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="exampleInputEmail1">Post Comment </label>
+                <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+              </div>
+              <input type="hidden" name="postId" value="{{post.id}}">
+              <input type="hidden" name="parentSno" value="">
+
+              <button type="submit" class="btn btn-primary my-2">Submit</button>
+            </form>
+             {% else %}
+               <h4> Please login for Comment a Post</h4>
+             {% endif %}
+
+
+             {% for comment in comments %}
+                <div class="row my-3">
+                  <div class="col-md-2  ">
+                    {% comment %} <img class="rounded mx-auto d-block w-100" src={% static 'images/userimage.png' %} alt="user"> {% endcomment %}
+                    <img class="rounded mx-auto d-block w-100" src={% static 'images/userimage.png' %} alt="user">
+                  </div>
+                  <div class="col-md-10 "> 
+                    <b> {{comment.user.username}} </b> at {{comment.post_date}}
+                    <div>   {{comment.comment}} </div> 
+
+                    {% comment %} REPLY {% endcomment %}
+
+                    {% if user.is_authenticated %}
+                    <div class="reply my-2">
+                      <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#replyBox{{comment.sno}}" aria-expanded="false" aria-controls="replyBox{{comment.sno}}">Reply</button>
+                      <div class="collapse my-2" id="replyBox{{comment.sno}}">
+                        <div class="card card-body">
+                          <form action="/readblog/postComment" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                              <label for="comment">Post a Reply </label>
+                              <input type="text" class="form-control" name="comment" placeholder="Enter reply here">
+                              <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                            </div>
+                            <input type="hidden" name="postId" value="{{post.id}}">
+                            <button type="submit" class="btn btn-primary my-2">Submit</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    <div class="replies ">
+                      {% for reply in replyDict|get_val:comment.sno  %}
+                      <div class="row my-3">
+                        <div class="col-md-2 ">
+                          <img class="rounded mx-auto d-block w-100" src={% static 'images/userimage.png' %} alt="user">
+                        </div>
+                        <div class="col-md-10">
+                          <div class="col-md-10 ">
+                            <b> {{reply.user.username}} </b> at {{reply.post_date}}
+                            <div>{{reply.comment}}</div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                    
+                   
+                  </div>
+                </div>
+             {% endfor %}
+          </div>
+        </div>
+        
+        <div class="col-md-5">
+          <img src="{{post.photo.url}}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"  alt="" width="600" height="400" aria-label="Placeholder: 600x400" preserveAspectRatio="xMidYMid slice" focusable="false"  ><rect width="100%" height="100%" fill="#eee"></rect>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+     <br>
+      <div class="position-sticky" style="top: 2rem;">
+        <div class="p-4 mb-3 bg-light rounded">
+      
+          <h4 class="fst-italic">About</h4>
+          <p class="mb-0">Customize this section to tell your visitors a little bit about your publication, writers, content, or something else entirely. Totally up to you.</p>
+        </div>
+
+        <div class="p-4" style="background-color: #f8f9fa;">
+          <h4 class="fst-italic" style='color: crimson; isolation: isolate;'>Archives</h4>
+          <ol class="list-unstyled mb-0">
+            <li><a class="ex2" href="#">November 2021</a></li>
+            <li><a class="ex2" href="#">October 2021</a></li>
+            <li><a class="ex2" href="#">September 2021</a></li>
+            <li><a class="ex2" href="#">August 2021</a></li>
+            <li><a class="ex2" href="#">July 2021</a></li>
+            <li><a class="ex2" href="#">June 2021</a></li>
+            <li><a class="ex2" href="#">May 2021</a></li>
+            <li><a class="ex2" href="#">April 2021</a></li>
+            <li><a class="ex2" href="#">March 2021</a></li>
+            <li><a class="ex2" href="#">February 2021</a></li>
+            <li><a class="ex2" href="#">January 2021</a></li>
+            <li><a class="ex2" href="#">December 2020</a></li>
+          </ol>
+        </div>
+
+        <div class="p-4" style="background-color: #f8f9fa;">
+          <h4 class="fst-italic" style='color: crimson; isolation: isolate;'>Elsewhere</h4>
+          <ol class="list-unstyled">
+            <li><a class="ex2"> GitHub</a></li>
+            <li><a class="ex2" href="#">Twitter</a></li>
+            <li><a class="ex2" href="#">Facebook</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock body %}

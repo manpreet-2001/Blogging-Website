@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href={% static 'css/about.css' %}>
+{% endblock head %}
+
+
+{% comment %} BODY PART {% endcomment %}
+{% block body %}
+{% include 'navbar.html' %}
+{% comment %} <div class="container">
+    <video autoplay loop muted>
+        <source src="{% static 'videos/Pexels.mp4' %}" type="video/mp4">
+    </video>
+</div>
+<div class="text-box">
+    <h1 style="font-size: 10.5rem;">Bloggle</h1>
+</div> {% endcomment %}
+<div class="container" style="height: 85vh; width: 116vh; margin: 5vh 0vh -25vh 10vh; display:inline;">
+<img src={% static 'images/webdev.png' %} alt="" style="height: 75vh;">
+</div>
+<div class="conatiner2" style="width: 30vw; margin: -14vw 0vw 0vw 57vw; display: inline-block;">
+<h2 style="font-style: italic;color: red;font-size: 10vh; isolation: isolate;">About</h2>
+<p style='font-size: 125%;'>This platform from where the users can connects and share their information or thoughts with others.
+</p>
+</div>
+
+
+{% endblock body %}

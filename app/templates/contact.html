@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+
+ 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow&display=swap" rel="stylesheet">
+
+
+
+
+{% endblock head %}
+
+{% block body  %}
+
+
+
+{% include 'navbar.html' %}
+{% if messages %}
+  {% for message in messages  %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}} 
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+   {% endfor %}
+{% endif %}
+	 <body background="{% static 'images/ist.jpg' %}" style="background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
+	<div class="container h-100" >
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+                    <h3 id="form-title" style="font-size: 2.75rem;">Contact</h3>
+				</div>
+				<div class="d-flex justify-content-center form_container" style="color: #106186;">
+				<form method="POST" action="" novalidate>
+			
+						{% csrf_token %}
+				<div id="div_id_name" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size: 125%;margin: 0px 0px 20px 0px;"> 
+				<label for="id_name" class=" requiredField">Name </label> 
+				<div class=""> <input type="text" name="name" class="input textinput textInput form-control" placeholder="Your Name" label_suffix="- " maxlength="150" required="" id="id_name"> </div> </div>
+
+                <div id="div_id_email" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size: 125%; margin: 0px 0px 20px 0px;"> 
+	            <label for="id_email" class=" requiredField"> Email </label> 
+	            <div class=""> <input type="email" name="email" class="input emailinput form-control" placeholder="you@gmail.com" maxlength="254" required="" id="id_email"> </div> </div>
+
+
+                <div id="div_id_desc" class="form-group" style="font-family: 'Archivo Narrow', sans-serif; font-size: 125%; margin: 0px 0px 20px 0px;"> 
+	            <label for="id_desc" class=" requiredField">Message </label> 
+	           <div class=""> <textarea name="desc" cols="40" rows="6" class="textarea form-control" placeholder="Your message" maxlength="400" required="" id="id_desc"></textarea> </div> </div>
+
+			   {{form.errors}}
+                        
+                <input type="submit" value="Send" class="btn btn-lg" style=" color: #fff9f9; background-color: #106186;border-color: #106186; ">
+    
+					</form>
+
+				</div>
+
+	
+				
+			</div>
+		</div>
+{% endblock body %}
